@@ -1,2 +1,5 @@
 rootProject.name='BaWei6_2'
 include ':app'
+include ':core'
+include ':usercenter'
+include ':common'
