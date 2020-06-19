@@ -1,16 +1,16 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
-
+def appInfo = rootProject.ext.android
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion appInfo.compileSdkVersion
+    buildToolsVersion appInfo.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion appInfo.minSdkVersion
+        targetSdkVersion appInfo.targetSdkVersion
+        versionCode appInfo.versionCode
+        versionName appInfo.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'

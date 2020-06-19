@@ -26,12 +26,13 @@
             android:layout_height="wrap_content"
             android:hint="输入密码"></EditText>
         <Button
+            android:layout_gravity="center"
             android:onClick="@{command::loginClick}"
             android:text="登录"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:background="@drawable/btn_backgound"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"></Button>
     </LinearLayout>
 
