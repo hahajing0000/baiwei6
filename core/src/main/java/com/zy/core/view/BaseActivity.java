@@ -52,4 +52,13 @@ public abstract class BaseActivity<Binding extends ViewDataBinding,VM extends Ba
     protected void showMsg(String msg){
         MsgUtils.INSTANCE.show(this,msg);
     }
+
+    /**
+     * 换取系统资源中的String  支持全球化
+     * @param strId String 资源的ID
+     * @return
+     */
+    protected String getResourceString(int strId){
+        return getResources().getString(strId);
+    }
 }

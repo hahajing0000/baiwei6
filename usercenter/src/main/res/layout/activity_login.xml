@@ -18,17 +18,17 @@
             android:text="@={vm.userEntity.username}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="输入用户名"></EditText>
+            android:hint="@string/user_hint_input_username"></EditText>
         <EditText
             android:inputType="textPassword"
             android:text="@={vm.userEntity.pwd}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="输入密码"></EditText>
+            android:hint="@string/user_hint_input_pwd"></EditText>
         <Button
             android:layout_gravity="center"
             android:onClick="@{command::loginClick}"
-            android:text="登录"
+            android:text="@string/user_ui_btnlogin"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:background="@drawable/btn_backgound"

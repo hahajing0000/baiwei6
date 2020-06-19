@@ -36,20 +36,20 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, UserViewMo
         String username = vm.userEntity.getUsername();
         String pwd = vm.userEntity.getPwd();
         if (TextUtils.isEmpty(username)){
-            showMsg("请输入用户名");
+            showMsg(getResourceString(R.string.user_hint_input_username));
             return;
         }
         if (TextUtils.isEmpty(pwd)){
-            showMsg("请输入密码");
+            showMsg(getResourceString(R.string.user_hint_input_pwd));
             return;
         }
         LiveData<Boolean> result = vm.login();
         if(result.getValue()){
-            showMsg("登录成功");
+            showMsg(getResourceString(R.string.user_login_success));
             return;
         }
         else{
-            showMsg("登录失败");
+            showMsg(getResourceString(R.string.user_login_failed));
         }
     }
 }
