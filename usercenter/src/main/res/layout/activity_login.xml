@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+   >
+    <data>
+        <variable
+            name="vm"
+            type="com.zy.usercenter.viewmodel.UserViewModel" />
+        <variable
+            name="command"
+            type="com.zy.usercenter.view.LoginActivity" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <EditText
+            android:text="@={vm.userEntity.username}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="输入用户名"></EditText>
+        <EditText
+            android:inputType="textPassword"
+            android:text="@={vm.userEntity.pwd}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="输入密码"></EditText>
+        <Button
+            android:onClick="@{command::loginClick}"
+            android:text="登录"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_backgound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></Button>
+    </LinearLayout>
+
+</layout>

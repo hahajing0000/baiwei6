@@ -2,6 +2,7 @@ package com.zy.core.view;
 
 import android.os.Bundle;
 
+import com.zy.common.utils.MsgUtils;
 import com.zy.core.viewmodel.BaseViewModel;
 
 import androidx.annotation.Nullable;
@@ -24,7 +25,13 @@ public abstract class BaseActivity<Binding extends ViewDataBinding,VM extends Ba
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, getLayoutId());
         vm=createVM();
+        initBinding();
     }
+
+    /**
+     * 初始化绑定
+     */
+    protected abstract void initBinding();
 
     /**
      * 创建VM
@@ -37,4 +44,12 @@ public abstract class BaseActivity<Binding extends ViewDataBinding,VM extends Ba
      * @return
      */
     protected abstract int getLayoutId();
+
+    /**
+     * 显示提示信息
+     * @param msg
+     */
+    protected void showMsg(String msg){
+        MsgUtils.INSTANCE.show(this,msg);
+    }
 }
