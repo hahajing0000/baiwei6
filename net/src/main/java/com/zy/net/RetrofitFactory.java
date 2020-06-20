@@ -1,5 +1,6 @@
 package com.zy.net;
 
+import android.os.Build;
 import android.text.TextUtils;
 
 import com.zy.common.utils.LogUtils;
@@ -10,6 +11,7 @@ import com.zy.net.protocol.TokenRespEntity;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -78,8 +80,20 @@ public class RetrofitFactory {
      * @return
      */
     private Interceptor headerParamsInterceptor() {
-
-        return null;
+        Interceptor interceptor=new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                Request newRequest = request.newBuilder()
+                        .addHeader("v0", Build.MANUFACTURER)
+                        .addHeader("v1",Build.MODEL)
+                        .addHeader("v2",Build.TYPE)
+                        .addHeader("v3",""+Build.VERSION.SDK_INT)
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        };
+        return interceptor;
     }
 
     /**
