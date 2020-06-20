@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 def appInfo = rootProject.ext.android
+def libs = rootProject.ext.dependencies
 android {
     compileSdkVersion appInfo.compileSdkVersion
     buildToolsVersion appInfo.buildToolsVersion
@@ -34,6 +35,15 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    api libs.retrofit
+    api libs.retrofitgson
+    api libs.retrofitrxjava
+    api libs.okhttplog
+    api libs.gson
+    api libs.rxandroid
+    api libs.rxjava
+    api libs.glide
 }
 repositories {
     mavenCentral()
