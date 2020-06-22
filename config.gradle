@@ -32,6 +32,7 @@ ext{
 
     url=[
             debug:"http://api.zydeveloper.com:7077/",
-            release:"http://api.zydeveloper.com:7077/"
+            release:"http://api.zydeveloper.com:7077/",
+            testServerUrl:"http://www.city2sky.cn/"
     ]
 }

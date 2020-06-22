@@ -9,8 +9,10 @@ import com.zy.net.common.Config;
 import com.zy.net.protocol.TokenRespEntity;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -70,9 +72,59 @@ public class RetrofitFactory {
                 .writeTimeout(Config.TIMEOUT,TimeUnit.SECONDS)
                 .addNetworkInterceptor(createNetworkInterceptor())
                 .addInterceptor(tokenInterceptor())
+                .addInterceptor(changeBaseUrl())
                 .addInterceptor(headerParamsInterceptor())
                 .build();
         return client;
+    }
+
+    /**
+     * 更改BaseUrl的拦截器
+     * @return
+     */
+    private Interceptor changeBaseUrl() {
+        Interceptor interceptor=new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                //拿到request请求对象
+                Request request = chain.request();
+                //从request请求中拿到url
+                HttpUrl oldUrl = request.url();
+                //创建一个新的request bilder
+                Request.Builder newBuilder = request.newBuilder();
+                //从当前请求中获取对应key的请求头信息
+                List<String> headers = request.headers(Config.NewUrlHeaderKey);
+                //如果包括该请求头
+                if (headers!=null&&headers.size()>0){
+                    //移除http请求的头信息 因为它只在程序内有效
+                    newBuilder.removeHeader(Config.NewUrlHeaderKey);
+                    //获取索引0的头 也就是第一个头信息
+                    String headerValue = headers.get(0);
+                    HttpUrl newBaseUrl=null;
+                    //如果存在指定value
+                    if (headerValue.equals(Config.NewUrlHeaderValue)){
+                        //将baseUrl更换成testServerUrl
+                        newBaseUrl=HttpUrl.parse(Config.TEST_SERVER_URL);
+                    }else{
+                        //没有指定的value就沿用原baseurl
+                        newBaseUrl=oldUrl;
+                    }
+                    //构建一个新的HttpUrl对象
+                    HttpUrl newUrl = oldUrl.newBuilder()
+                            .scheme(newBaseUrl.scheme())
+                            .host(newBaseUrl.host())
+                            .port(newBaseUrl.port())
+                            .build();
+                    //沟通一个新的request对象
+                    Request newRequest = newBuilder.url(newUrl).build();
+                    //传递到下游链节点
+                    return chain.proceed(newRequest);
+                }
+                //不包含直接执行原请求
+                return chain.proceed(request);
+            }
+        };
+        return interceptor;
     }
 
     /**

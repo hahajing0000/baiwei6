@@ -1,6 +1,7 @@
 package com.zy.usercenter.viewmodel;
 
 import com.zy.core.viewmodel.BaseViewModel;
+import com.zy.net.protocol.BaseRespEntity;
 import com.zy.usercenter.entity.UserEntity;
 import com.zy.usercenter.repository.UserRepository;
 
@@ -21,7 +22,7 @@ public class UserViewModel extends BaseViewModel {
      * 登录方法
      * @return
      */
-    public LiveData<Boolean> login(){
+    public LiveData<BaseRespEntity<UserEntity>> login(){
         UserRepository userRepository=getRepository(UserRepository.class.getSimpleName());
         return userRepository.login(userEntity);
     }

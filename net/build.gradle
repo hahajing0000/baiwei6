@@ -20,11 +20,13 @@ android {
     buildTypes {
         release {
             buildConfigField("String","baseUrl","\""+urls.release+"\"")
+            buildConfigField("String","testServerUrl","\""+urls.testServerUrl+"\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug{
             buildConfigField("String","baseUrl","\""+urls.debug+"\"")
+            buildConfigField("String","testServerUrl","\""+urls.testServerUrl+"\"")
         }
     }
 

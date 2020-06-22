@@ -4,10 +4,16 @@ import android.os.Looper;
 
 import com.zy.common.utils.LogUtils;
 import com.zy.core.model.IModel;
+import com.zy.net.RetrofitFactory;
+import com.zy.net.protocol.BaseRespEntity;
 import com.zy.usercenter.entity.UserEntity;
+import com.zy.usercenter.model.api.UserApi;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * @author:zhangyue
@@ -21,16 +27,33 @@ public class UserModel implements IModel {
      * @param userEntity
      * @return
      */
-    public LiveData<Boolean> login(UserEntity userEntity){
+    public LiveData<BaseRespEntity<UserEntity>> login(UserEntity userEntity){
         LogUtils.INSTANCE.d(TAG,"userEntity: username-"+userEntity.getUsername()+" pwd-"+userEntity.getPwd());
-        MutableLiveData<Boolean> result=new MutableLiveData<>();
-        if (Looper.getMainLooper().getThread()==Thread.currentThread()){
-            result.setValue(false);
+//        MutableLiveData<Boolean> result=new MutableLiveData<>();
+//        if (Looper.getMainLooper().getThread()==Thread.currentThread()){
+//            result.setValue(false);
+//
+//        }
+//        else{
+//            result.postValue(false);
+//        }
+//        return result;
+        final MutableLiveData<BaseRespEntity<UserEntity>> result=new MutableLiveData<>();
+        UserApi userApi = RetrofitFactory.getInstance().create(UserApi.class);
+        Call<BaseRespEntity<UserEntity>> call = userApi.login(userEntity);
+        call.enqueue(new Callback<BaseRespEntity<UserEntity>>() {
+            @Override
+            public void onResponse(Call<BaseRespEntity<UserEntity>> call, Response<BaseRespEntity<UserEntity>> response) {
+                result.postValue(response.body());
+            }
 
-        }
-        else{
-            result.postValue(false);
-        }
+            @Override
+            public void onFailure(Call<BaseRespEntity<UserEntity>> call, Throwable t) {
+                result.postValue(null);
+                LogUtils.INSTANCE.e(TAG,t);
+            }
+        });
+
         return result;
     }
 }

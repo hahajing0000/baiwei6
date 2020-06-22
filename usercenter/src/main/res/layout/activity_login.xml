@@ -34,6 +34,11 @@
             android:background="@drawable/btn_backgound"
             android:layout_width="150dp"
             android:layout_height="wrap_content"></Button>
+        <Button
+            android:onClick="@{command::changeUrlClick}"
+            android:text="测试BaseUrl更换"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></Button>
     </LinearLayout>
 
 </layout>

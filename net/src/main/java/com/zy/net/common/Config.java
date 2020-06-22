@@ -23,4 +23,13 @@ public class Config {
      * 网络请求的基础地址
      */
     public final static String BASE_URL= BuildConfig.baseUrl;
+
+    /**
+     * 测试业务服务器地址
+     */
+    public final static String TEST_SERVER_URL=BuildConfig.testServerUrl;
+
+    public final static String  NewUrlHeaderKey="newUrl";
+    public final static String NewUrlHeaderValue="testServerUrl";
+
 }

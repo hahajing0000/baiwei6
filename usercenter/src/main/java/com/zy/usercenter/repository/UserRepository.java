@@ -3,6 +3,7 @@ package com.zy.usercenter.repository;
 import com.zy.common.utils.LogUtils;
 import com.zy.core.model.IModel;
 import com.zy.core.repository.Repository;
+import com.zy.net.protocol.BaseRespEntity;
 import com.zy.usercenter.entity.UserEntity;
 import com.zy.usercenter.model.UserModel;
 
@@ -25,7 +26,7 @@ public class UserRepository extends Repository<UserModel> {
      * @param userEntity
      * @return
      */
-    public LiveData<Boolean> login(UserEntity userEntity){
+    public LiveData<BaseRespEntity<UserEntity>> login(UserEntity userEntity){
         /**
          * 无网络
          * 可以选择加载本地数据（sqlite  sp  file  lrucache）

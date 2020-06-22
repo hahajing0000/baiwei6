@@ -32,6 +32,21 @@ object LogUtils {
         }
     }
 
+    fun e(tag:String,log:Throwable){
+        if (isDebug) {
+            if(tag==""){
+                Log.e(TAG, log.message)
+            }
+            else{
+                val stackTrace = log.stackTrace
+                for (item in stackTrace){
+                    Log.e(TAG,"$tag : filename = ${item.fileName} classname = ${item.className} methodname = ${item.methodName} linenumber -> ${item.lineNumber}")
+                }
+                Log.e(TAG,"$tag : ${log.message}")
+            }
+        }
+    }
+
     fun w(tag:String,log:String){
         if (isDebug) {
             if(tag==""){
