@@ -67,7 +67,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, UserViewMo
         result.observe(this, new Observer<BaseRespEntity<UserEntity>>() {
             @Override
             public void onChanged(BaseRespEntity<UserEntity> userEntityBaseRespEntity) {
-                if (userEntityBaseRespEntity!=null){
+                if (userEntityBaseRespEntity!=null&&userEntityBaseRespEntity.getData()!=null){
                     showMsg(getResourceString(R.string.user_login_success));
                 }else{
                     showMsg(getResourceString(R.string.user_login_failed));

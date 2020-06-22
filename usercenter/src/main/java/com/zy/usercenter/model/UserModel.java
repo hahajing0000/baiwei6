@@ -1,16 +1,29 @@
 package com.zy.usercenter.model;
 
-import android.os.Looper;
-
-import com.zy.common.utils.LogUtils;
 import com.zy.core.model.IModel;
 import com.zy.net.RetrofitFactory;
 import com.zy.net.protocol.BaseRespEntity;
+import com.zy.net.rx.BaseObservable;
+import com.zy.net.rx.BaseObserver;
 import com.zy.usercenter.entity.UserEntity;
 import com.zy.usercenter.model.api.UserApi;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,38 +35,83 @@ import retrofit2.Response;
  */
 public class UserModel implements IModel {
     private final String TAG=UserModel.class.getSimpleName();
+    Disposable disposable=null;
     /**
      * 登录方法
      * @param userEntity
      * @return
      */
-    public LiveData<BaseRespEntity<UserEntity>> login(UserEntity userEntity){
-        LogUtils.INSTANCE.d(TAG,"userEntity: username-"+userEntity.getUsername()+" pwd-"+userEntity.getPwd());
-//        MutableLiveData<Boolean> result=new MutableLiveData<>();
-//        if (Looper.getMainLooper().getThread()==Thread.currentThread()){
-//            result.setValue(false);
-//
-//        }
-//        else{
-//            result.postValue(false);
-//        }
-//        return result;
+    public LiveData<BaseRespEntity<UserEntity>> login(final UserEntity userEntity){
+
         final MutableLiveData<BaseRespEntity<UserEntity>> result=new MutableLiveData<>();
-        UserApi userApi = RetrofitFactory.getInstance().create(UserApi.class);
-        Call<BaseRespEntity<UserEntity>> call = userApi.login(userEntity);
-        call.enqueue(new Callback<BaseRespEntity<UserEntity>>() {
+        Flowable.create(new FlowableOnSubscribe<BaseRespEntity<UserEntity>>() {
             @Override
-            public void onResponse(Call<BaseRespEntity<UserEntity>> call, Response<BaseRespEntity<UserEntity>> response) {
-                result.postValue(response.body());
-            }
+            public void subscribe(final FlowableEmitter<BaseRespEntity<UserEntity>> emitter) throws Exception {
+                UserApi userApi = RetrofitFactory.getInstance().create(UserApi.class);
+                Call<BaseRespEntity<UserEntity>> call = userApi.login(userEntity);
+                call.enqueue(new Callback<BaseRespEntity<UserEntity>>() {
+                    @Override
+                    public void onResponse(Call<BaseRespEntity<UserEntity>> call, Response<BaseRespEntity<UserEntity>> response) {
+                        if (response.body().getCode() == -1) {
+                            emitter.onError(new RuntimeException("用户登录失败"));
+                            return;
+                        }
 
-            @Override
-            public void onFailure(Call<BaseRespEntity<UserEntity>> call, Throwable t) {
-                result.postValue(null);
-                LogUtils.INSTANCE.e(TAG,t);
-            }
-        });
+                        emitter.onNext(response.body());
+                        emitter.onComplete();
+                    }
 
+                    @Override
+                    public void onFailure(Call<BaseRespEntity<UserEntity>> call, Throwable t) {
+                        emitter.onError(t);
+                    }
+                });
+            }
+        }, BackpressureStrategy.LATEST).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<BaseRespEntity<UserEntity>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+                        s.request(Long.MAX_VALUE);
+                    }
+
+                    @Override
+                    public void onNext(BaseRespEntity<UserEntity> userEntityBaseRespEntity) {
+                        result.postValue(userEntityBaseRespEntity);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        result.postValue(null);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+//        Observable<BaseRespEntity<UserEntity>> observable = Observable.create(new ObservableOnSubscribe<BaseRespEntity<UserEntity>>() {
+//            @Override
+//            public void subscribe(final ObservableEmitter<BaseRespEntity<UserEntity>> emitter) throws Exception {
+//
+//
+//            }
+//        });
+
+//        BaseObservable.doObservable(observable,new BaseObserver<BaseRespEntity<UserEntity>>(){
+//            @Override
+//            public void onNext(BaseRespEntity<UserEntity> userEntityBaseRespEntity) {
+//                super.onNext(userEntityBaseRespEntity);
+//                result.postValue(userEntityBaseRespEntity);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                super.onError(e);
+//                result.postValue(null);
+//            }
+//        });
         return result;
     }
 }
