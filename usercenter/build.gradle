@@ -44,6 +44,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation project(path: ':net')
     implementation project(path: ':storage')
+    implementation project(path: ':wiget')
 }
 repositories {
     mavenCentral()
