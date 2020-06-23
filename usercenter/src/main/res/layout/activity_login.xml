@@ -10,35 +10,43 @@
             name="command"
             type="com.zy.usercenter.view.LoginActivity" />
     </data>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <EditText
-            android:text="@={vm.userEntity.username}"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_centerInParent="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/user_hint_input_username"></EditText>
-        <EditText
-            android:inputType="textPassword"
-            android:text="@={vm.userEntity.pwd}"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/user_hint_input_pwd"></EditText>
-        <Button
-            android:layout_gravity="center"
-            android:onClick="@{command::loginClick}"
-            android:text="@string/user_ui_btnlogin"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:background="@drawable/btn_backgound"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"></Button>
-        <Button
-            android:onClick="@{command::changeUrlClick}"
-            android:text="测试BaseUrl更换"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Button>
-    </LinearLayout>
+            android:orientation="vertical">
+            <EditText
+                android:text="@={vm.userEntity.username}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/user_hint_input_username"></EditText>
+            <EditText
+                android:inputType="textPassword"
+                android:text="@={vm.userEntity.pwd}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/user_hint_input_pwd"></EditText>
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_gravity="center"
+                android:onClick="@{command::loginClick}"
+                android:text="@string/user_ui_btnlogin"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_backgound"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"></Button>
+            <TextView
+                android:text="忘记密码"
+                android:textColor="@color/gold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </layout>

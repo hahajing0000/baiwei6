@@ -3,6 +3,7 @@
     package="com.zy.usercenter">
 
     <application
+        android:name=".UserCenterApp"
         android:allowBackup="true"
         android:label="金融-用户模块"
         android:supportsRtl="true"

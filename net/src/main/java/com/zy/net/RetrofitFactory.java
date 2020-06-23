@@ -3,17 +3,19 @@ package com.zy.net;
 import android.os.Build;
 import android.text.TextUtils;
 
+import com.zy.common.app.BaseAppcation;
 import com.zy.common.utils.LogUtils;
 import com.zy.net.api.TokenApi;
 import com.zy.net.common.Config;
 import com.zy.net.protocol.TokenRespEntity;
 import com.zy.net.retrofit.calladapter.LiveDataCallAdapterFactory;
+import com.zy.storage.core.StorageManager;
+import com.zy.storage.utils.SharePreferenceUtils;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -159,6 +161,12 @@ public class RetrofitFactory {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
+                //获取本地Token
+                String localToken = StorageManager.getInstance().get("token");
+                if (!TextUtils.isEmpty(localToken)){
+                    return resetRequest(request,localToken,chain);
+                }
+
                 Response response = chain.proceed(request);
 
                 //如果是401 同步请求Token然后加载到新请求的Header里，重新发起业务请求
@@ -168,11 +176,11 @@ public class RetrofitFactory {
                         LogUtils.INSTANCE.e(TAG,"Error : token is null...");
                         return response;
                     }
-                    //Request newRequest=chain.request();
-                    Request.Builder newBuilder = request.newBuilder().addHeader("Authorization", "bearer " + token);
 
-                    Request newRequest=newBuilder.build();
-                    return chain.proceed(newRequest);
+                    //TODO:保存Token 到SP
+                    StorageManager.getInstance().save("token",token);
+
+                    return resetRequest(request,token,chain);
                 }
                 return response;
             }
@@ -180,6 +188,27 @@ public class RetrofitFactory {
 
         return interceptor;
     }
+
+    /**
+     * 重置请求
+     * @param request 请求
+     * @param token token令牌
+     * @param chain Okhttp的执行链
+     * @return
+     */
+    private Response resetRequest(Request request,String token,Interceptor.Chain chain){
+        Request.Builder newBuilder = request.newBuilder().addHeader("Authorization", "bearer " + token);
+
+        Request newRequest=newBuilder.build();
+        try {
+            return chain.proceed(newRequest);
+        } catch (IOException e) {
+            LogUtils.INSTANCE.e(TAG,e);
+        }
+        return null;
+    }
+
+
 
     /**
      * 判断HTTP CODE 是否401 —— TOKEN失效
