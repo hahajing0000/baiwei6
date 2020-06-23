@@ -7,6 +7,7 @@ import com.zy.common.utils.LogUtils;
 import com.zy.net.api.TokenApi;
 import com.zy.net.common.Config;
 import com.zy.net.protocol.TokenRespEntity;
+import com.zy.net.retrofit.calladapter.LiveDataCallAdapterFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,6 +59,7 @@ public class RetrofitFactory {
                 .client(createOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(LiveDataCallAdapterFactory.create())
                 .build();
     }
 

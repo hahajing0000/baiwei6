@@ -3,6 +3,10 @@ package com.zy.usercenter.model.api;
 import com.zy.net.protocol.BaseRespEntity;
 import com.zy.usercenter.entity.UserEntity;
 
+import java.util.Observable;
+
+import androidx.lifecycle.LiveData;
+import io.reactivex.Flowable;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -17,5 +21,5 @@ public interface UserApi {
 //    Call<TokenRespEntity> getTest();
 
     @POST("api/User/login")
-    Call<BaseRespEntity<UserEntity>> login(@Body UserEntity userEntity);
+    LiveData<BaseRespEntity<UserEntity>> login(@Body UserEntity userEntity);
 }
