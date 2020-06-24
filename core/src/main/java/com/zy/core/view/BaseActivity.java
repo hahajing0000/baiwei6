@@ -1,8 +1,12 @@
 package com.zy.core.view;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import com.zy.common.app.BaseAppcation;
 import com.zy.common.utils.MsgUtils;
+import com.zy.core.R;
+import com.zy.core.common.StatusBarUtil;
 import com.zy.core.viewmodel.BaseViewModel;
 
 import androidx.annotation.Nullable;
@@ -23,9 +27,16 @@ public abstract class BaseActivity<Binding extends ViewDataBinding,VM extends Ba
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStatusBar();
         binding = DataBindingUtil.setContentView(this, getLayoutId());
         vm=createVM();
         initBinding();
+    }
+
+    protected void setStatusBar() {
+
+//        StatusBarUtil.setTransparent(this);
+//        StatusBarUtil.setColor(this, BaseAppcation.getAppContext().getResources().getColor(R.color.colorPrimary),0);
     }
 
     /**

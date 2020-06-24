@@ -6,6 +6,22 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+<!--        <item name="android:background">@color/white</item>-->
+    </style>
+
+    <!--标题栏字体样式-->
+    <style name="titlebarTxtStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="titlebarTitleTxtStyle">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>

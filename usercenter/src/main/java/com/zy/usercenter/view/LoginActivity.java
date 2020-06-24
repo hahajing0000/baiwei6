@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.zy.common.utils.LogUtils;
+import com.zy.common.utils.MsgUtils;
 import com.zy.core.view.BaseActivity;
 import com.zy.net.RetrofitFactory;
 import com.zy.net.protocol.BaseRespEntity;
@@ -13,6 +14,7 @@ import com.zy.usercenter.databinding.ActivityLoginBinding;
 import com.zy.usercenter.entity.UserEntity;
 import com.zy.usercenter.model.api.UserApi;
 import com.zy.usercenter.viewmodel.UserViewModel;
+import com.zy.wiget.TitleBar;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -22,10 +24,23 @@ import retrofit2.Response;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, UserViewModel> {
     private final String TAG=LoginActivity.class.getSimpleName();
+    private TitleBar titleBar;
     @Override
     protected void initBinding() {
         binding.setVm(vm);
         binding.setCommand(this);
+        titleBar=findViewById(R.id.tb_bar);
+        titleBar.setTitleBarClickListener(new TitleBar.TitleBarClickListener() {
+            @Override
+            public void leftClick(View view) {
+                MsgUtils.INSTANCE.show(LoginActivity.this,"left");
+            }
+
+            @Override
+            public void rightClick(View view) {
+                MsgUtils.INSTANCE.show(LoginActivity.this,"right");
+            }
+        });
     }
 
     @Override
