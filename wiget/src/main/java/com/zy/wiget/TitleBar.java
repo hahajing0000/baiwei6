@@ -106,7 +106,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             if (right_icon_visible){
                 right.setVisibility(VISIBLE);
             }else {
-                right.setVisibility(GONE);
+                right.setVisibility(INVISIBLE);
             }
         }
         typedArray.recycle();

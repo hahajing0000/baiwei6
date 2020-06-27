@@ -40,6 +40,27 @@ dependencies {
     implementation project(path: ':common')
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation project(path: ':wiget')
+    if (!IS_USERCENTER_APP.toBoolean()){
+        implementation project(path: ':usercenter')
+    }
+    if (!IS_FINALCE_APP.toBoolean()){
+        implementation project(path: ':finalce')
+    }
+
+    if (!IS_HOME_APP.toBoolean()){
+        implementation project(path: ':home')
+    }
+    if (!IS_MORE_APP.toBoolean()){
+        implementation project(path: ':more')
+    }
+
+    if (!IS_ACCOUNT_APP.toBoolean()){
+        implementation project(path: ':account')
+    }
+
+
 }
 repositories {
     mavenCentral()

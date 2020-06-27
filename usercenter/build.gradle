@@ -1,4 +1,9 @@
-apply plugin: 'com.android.application'
+if (IS_USERCENTER_APP.toBoolean()){
+    apply plugin: 'com.android.application'
+}else{
+    apply plugin: 'com.android.library'
+}
+
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
@@ -27,6 +32,16 @@ android {
 
     dataBinding {
         enabled = true
+    }
+
+    sourceSets{
+        main{
+            if (IS_USERCENTER_APP.toBoolean()){
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            }else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
     }
 }
 

@@ -11,6 +11,7 @@
         android:text=""
         style="@style/titlebarTxtStyle"></TextView>
     <TextView
+        android:layout_alignBaseline="@+id/view_titlebar_left"
         android:id="@+id/view_titlebar_title"
         android:layout_centerInParent="true"
         android:text=""
