@@ -6,9 +6,12 @@
         <attr name="left_iocn_visible" format="boolean"></attr>
 
         <attr name="title_txt" format="string"></attr>
+        <attr name="title_txt_size" format="float"></attr>
 
         <attr name="right_txt" format="string"></attr>
         <attr name="right_icon" format="reference"></attr>
         <attr name="right_icon_visible" format="boolean"></attr>
+
+        <attr name="icon_wh" format="integer"></attr>
     </declare-styleable>
 </resources>

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 def appInfo = rootProject.ext.android
+def libs = rootProject.ext.dependencies
 android {
     compileSdkVersion appInfo.compileSdkVersion
     buildToolsVersion appInfo.buildToolsVersion
@@ -40,6 +41,8 @@ dependencies {
     implementation project(path: ':common')
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation libs.material
 
     implementation project(path: ':wiget')
     if (!IS_USERCENTER_APP.toBoolean()){
