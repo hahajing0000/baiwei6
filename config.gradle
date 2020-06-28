@@ -17,7 +17,8 @@ ext{
             rxjava:"2.2.5",
             okhttplog:"3.5.0",
             glide: "4.9.0",
-            material:"1.0.0"
+            material:"1.0.0",
+            banner:"1.4.10"
     ]
 
     dependencies=[
@@ -29,7 +30,8 @@ ext{
             rxandroid:"io.reactivex.rxjava2:rxandroid:$dependenciesVersion.rxandroid",
             rxjava:"io.reactivex.rxjava2:rxjava:$dependenciesVersion.rxjava",
             glide:"com.github.bumptech.glide:glide:$dependenciesVersion.glide",
-            material: "com.google.android.material:material:$dependenciesVersion.material"
+            material: "com.google.android.material:material:$dependenciesVersion.material",
+            banner:"com.youth.banner:banner:$dependenciesVersion.banner"
     ]
 
     url=[

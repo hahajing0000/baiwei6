@@ -17,7 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.zy.account.AccountFragment;
 import com.zy.adapter.FragmentViewPagerAdapter;
 import com.zy.finalce.FinalceFragment;
-import com.zy.home.HomeFragment;
+import com.zy.home.view.HomeFragment;
 import com.zy.more.MoreFragment;
 import com.zy.wiget.TitleBar;
 

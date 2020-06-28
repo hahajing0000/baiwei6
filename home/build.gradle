@@ -4,6 +4,7 @@ if (IS_HOME_APP.toBoolean()){
     apply plugin: 'com.android.library'
 }
 
+def libs = rootProject.ext.dependencies
 
 android {
     compileSdkVersion 29
@@ -35,6 +36,10 @@ android {
             }
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -44,4 +49,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //引入第三方的Banner库
+    implementation libs.banner
+    implementation project(path: ':common')
+    implementation project(path: ':storage')
+    implementation project(path: ':core')
+    implementation project(path: ':wiget')
+    implementation project(path: ':net')
 }

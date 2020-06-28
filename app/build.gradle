@@ -45,6 +45,7 @@ dependencies {
     implementation libs.material
 
     implementation project(path: ':wiget')
+    implementation project(path: ':core')
     if (!IS_USERCENTER_APP.toBoolean()){
         implementation project(path: ':usercenter')
     }

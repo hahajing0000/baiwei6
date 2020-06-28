@@ -29,13 +29,29 @@ public abstract class BaseFragment<Binding extends ViewDataBinding,VM extends Ba
         binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
         View view = binding.getRoot();
         vm=createVM();
+        initContentView(view);
+        initBinding();
         return view;
     }
+
+    /**
+     * 初始化视图
+     * @param view
+     */
+    protected abstract void initContentView(View view);
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initData(savedInstanceState);
     }
+
+    /**
+     * 初始化数据
+     * @param savedInstanceState
+     */
+    protected abstract void initData(Bundle savedInstanceState);
 
     /**
      * 获取布局id
@@ -48,4 +64,9 @@ public abstract class BaseFragment<Binding extends ViewDataBinding,VM extends Ba
      * @return
      */
     protected abstract VM createVM();
+
+    /**
+     * 初始化绑定
+     */
+    protected abstract void initBinding();
 }
