@@ -1,5 +1,7 @@
 package com.zy.net.protocol;
 
+import com.zy.net.rx.BaseObservable;
+
 /**
  * @author:zhangyue
  * @date:2020/6/22
@@ -8,6 +10,12 @@ public class BaseRespEntity<T> {
     private int code;
     private T data;
     private String msg;
+
+    public BaseRespEntity(){}
+
+    public BaseRespEntity(T data) {
+        this.data = data;
+    }
 
     public int getCode() {
         return code;

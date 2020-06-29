@@ -18,10 +18,13 @@ import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoaderInterface;
 import com.zy.common.app.BaseAppcation;
+import com.zy.common.utils.LogUtils;
 import com.zy.core.view.BaseFragment;
 import com.zy.home.R;
 import com.zy.home.databinding.LayoutHomeBinding;
+import com.zy.home.entity.BannerEntity;
 import com.zy.home.viewmodel.HomeViewModel;
+import com.zy.net.protocol.BaseRespEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +34,15 @@ import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.ObservableField;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 /**
  * @author:zhangyue
  * @date:2020/6/27
  */
 public class HomeFragment extends BaseFragment<LayoutHomeBinding, HomeViewModel> implements OnBannerListener {
+    private final String TAG=HomeFragment.class.getSimpleName();
     private Banner bannerHomeMain;
     private ViewFlipper vfMain;
     private ImageView ivAdv;
@@ -88,29 +94,8 @@ public class HomeFragment extends BaseFragment<LayoutHomeBinding, HomeViewModel>
      * 初始化数据
      */
     private void initData() {
-        List<String> imgPath=new ArrayList<>();
-        imgPath.add("http://hbimg.b0.upaiyun.com/0cdfedffcedb13445e4def3f2d6891bb32cb03de828b-m2zK4U_fw658");
-        imgPath.add("http://hbimg.b0.upaiyun.com/8a75ab36c175489634b6c8621eea02fd8c83bb82c3869-Waz6eO_fw658");
-        imgPath.add("http://hbimg.b0.upaiyun.com/a2a321fb4e128e2327674fee6c3be76bb7d6f70929ca3-IVhr33_fw658");
-        imgPath.add("http://hbimg.b0.upaiyun.com/861f92e7514b297b0cd5833b3ffb52f8df37b4ec218f8-BmVyhw_fw658");
-
-        List<String> strings=new ArrayList<>();
-        strings.add("金融产品1");
-        strings.add("金融产品2");
-        strings.add("金融产品3");
-        strings.add("金融产品4");
-
-        bannerHomeMain.setImages(imgPath);
-        bannerHomeMain.setBannerTitles(strings);
-        bannerHomeMain.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-        bannerHomeMain.setImageLoader(new MyBannerLoader());
-        bannerHomeMain.setBannerAnimation(Transformer.Default);
-        bannerHomeMain.setDelayTime(3000);
-        bannerHomeMain.isAutoPlay(true);
-
-        bannerHomeMain.setIndicatorGravity(Gravity.CENTER)
-                .setOnBannerListener(this)
-                .start();
+        //初始化Banner数据
+        initBannerData();
 
         for (int i=0;i<10;i++){
             View view = getLayoutInflater().inflate(R.layout.item_viewffipper, null);
@@ -130,6 +115,50 @@ public class HomeFragment extends BaseFragment<LayoutHomeBinding, HomeViewModel>
 
 //        //加载网络资源图片到imageview上
 //        Glide.with(getActivity()).load("http://hbimg.b0.upaiyun.com/0cdfedffcedb13445e4def3f2d6891bb32cb03de828b-m2zK4U_fw658").into(ivAdv);
+    }
+
+    /**
+     * 初始化Banner数据
+     */
+    private void initBannerData() {
+        final LiveData<BaseRespEntity<List<BannerEntity>>> banner = vm.getBanner();
+        banner.observe(this, new Observer<BaseRespEntity<List<BannerEntity>>>() {
+            @Override
+            public void onChanged(BaseRespEntity<List<BannerEntity>> bannerEntities) {
+                if (bannerEntities==null||bannerEntities.getData()==null){
+                    LogUtils.INSTANCE.i(TAG,"the bannerEntities is null or empty...");
+                    return;
+                }
+                List<String> imgs=new ArrayList<>();
+                List<String> titles=new ArrayList<>();
+                for (BannerEntity entity:
+                     bannerEntities.getData()) {
+                    imgs.add(entity.getImgurl());
+                    titles.add(entity.getDesc());
+                }
+                bindBannerControl(imgs,titles);
+            }
+        });
+
+    }
+
+    /**
+     * 绑定数据到Banner控件
+     * @param imgs
+     * @param titles
+     */
+    private void bindBannerControl(List<String> imgs,List<String> titles){
+        bannerHomeMain.setImages(imgs);
+        bannerHomeMain.setBannerTitles(titles);
+        bannerHomeMain.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+        bannerHomeMain.setImageLoader(new MyBannerLoader());
+        bannerHomeMain.setBannerAnimation(Transformer.Default);
+        bannerHomeMain.setDelayTime(3000);
+        bannerHomeMain.isAutoPlay(true);
+
+        bannerHomeMain.setIndicatorGravity(Gravity.CENTER)
+                .setOnBannerListener(this)
+                .start();
     }
 
     @Override

@@ -18,7 +18,8 @@ ext{
             okhttplog:"3.5.0",
             glide: "4.9.0",
             material:"1.0.0",
-            banner:"1.4.10"
+            banner:"1.4.10",
+            room_version : "2.2.5"
     ]
 
     dependencies=[
@@ -31,7 +32,10 @@ ext{
             rxjava:"io.reactivex.rxjava2:rxjava:$dependenciesVersion.rxjava",
             glide:"com.github.bumptech.glide:glide:$dependenciesVersion.glide",
             material: "com.google.android.material:material:$dependenciesVersion.material",
-            banner:"com.youth.banner:banner:$dependenciesVersion.banner"
+            banner:"com.youth.banner:banner:$dependenciesVersion.banner",
+            room : "androidx.room:room-runtime:$dependenciesVersion.room_version",
+            roomcompiler : "androidx.room:room-compiler:$dependenciesVersion.room_version" // For Kotlin use kapt instead of annotationProcessor
+
     ]
 
     url=[

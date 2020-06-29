@@ -31,6 +31,6 @@ public class UserRepository extends Repository<UserModel> {
          * 无网络
          * 可以选择加载本地数据（sqlite  sp  file  lrucache）
          */
-        return mModel.login(userEntity);
+        return getModel().login(userEntity);
     }
 }

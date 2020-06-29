@@ -46,6 +46,7 @@ dependencies {
 
     implementation project(path: ':wiget')
     implementation project(path: ':core')
+    implementation project(path: ':net')
     if (!IS_USERCENTER_APP.toBoolean()){
         implementation project(path: ':usercenter')
     }
