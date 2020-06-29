@@ -13,6 +13,7 @@ import com.zy.net.protocol.BaseRespEntity;
 
 import java.util.List;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 
 /**
@@ -20,9 +21,12 @@ import androidx.lifecycle.LiveData;
  * @date:2020/6/28
  */
 public class HomeViewModel extends BaseViewModel {
-    public HomeViewModel(){
-        registerRepository(HomeRepository.class.getSimpleName(),new HomeRepository());
+
+    public HomeViewModel(LifecycleOwner _owner){
+        super(_owner);
+        registerRepository(HomeRepository.class.getSimpleName(),new HomeRepository(_owner));
     }
+
 
     /**
      * 获取Banner实体信息

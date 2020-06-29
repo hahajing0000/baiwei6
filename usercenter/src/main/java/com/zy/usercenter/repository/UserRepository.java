@@ -7,6 +7,7 @@ import com.zy.net.protocol.BaseRespEntity;
 import com.zy.usercenter.entity.UserEntity;
 import com.zy.usercenter.model.UserModel;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -16,6 +17,9 @@ import androidx.lifecycle.MutableLiveData;
  * 用户模块的数据仓库层
  */
 public class UserRepository extends Repository<UserModel> {
+    public UserRepository(LifecycleOwner _owner){
+        super(_owner);
+    }
     @Override
     protected UserModel createModel() {
         return new UserModel();

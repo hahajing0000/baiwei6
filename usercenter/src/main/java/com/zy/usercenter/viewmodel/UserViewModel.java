@@ -5,6 +5,7 @@ import com.zy.net.protocol.BaseRespEntity;
 import com.zy.usercenter.entity.UserEntity;
 import com.zy.usercenter.repository.UserRepository;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 
 /**
@@ -14,8 +15,9 @@ import androidx.lifecycle.LiveData;
 public class UserViewModel extends BaseViewModel {
     public UserEntity userEntity=new UserEntity();
 
-    public UserViewModel(){
-        registerRepository(UserRepository.class.getSimpleName(),new UserRepository());
+    public UserViewModel(LifecycleOwner _owner){
+        super(_owner);
+        registerRepository(UserRepository.class.getSimpleName(),new UserRepository(_owner));
     }
 
     /**

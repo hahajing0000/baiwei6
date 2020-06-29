@@ -7,6 +7,7 @@ import java.util.Map;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ViewModel;
 
@@ -14,11 +15,15 @@ import androidx.lifecycle.ViewModel;
  * @author:zhangyue
  * @date:2020/6/19
  */
-public class BaseViewModel extends ViewModel implements LifecycleObserver {
+public abstract class BaseViewModel extends ViewModel implements LifecycleObserver {
+    protected LifecycleOwner owner;
     protected Map<String, Repository> repositoryMap;
-    public BaseViewModel(){
+    public BaseViewModel(LifecycleOwner _owner){
         repositoryMap=new HashMap<>();
+        owner=_owner;
     }
+
+
 
     /**
      * 注册数据仓库

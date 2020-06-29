@@ -24,7 +24,7 @@ public interface HomeDao {
      * @return
      */
     @Query("select * from tb_banner")
-    LiveData<List<BannerEntity>> getBannerAll();
+    List<BannerEntity> getBannerAll();
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertBannerAll(List<BannerEntity> banners);
 
@@ -33,7 +33,7 @@ public interface HomeDao {
      * @return
      */
     @Query("select * from tb_sysmsg")
-    LiveData<List<SysMsgEntity>> getSysMsgAll();
+    List<SysMsgEntity> getSysMsgAll();
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertSysMsgAll(List<SysMsgEntity> sysmsgs);
 
@@ -42,9 +42,9 @@ public interface HomeDao {
      * @return
      */
     @Query("select * from tb_product where isnew=1")
-    LiveData<List<ProductEntity>> getNewUserProductAll();
+    List<ProductEntity> getNewUserProductAll();
     @Query("select * from tb_product where isnew=0")
-    LiveData<List<ProductEntity>> getProductAll();
+    List<ProductEntity> getProductAll();
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertProductAll(List<ProductEntity> products);
 }

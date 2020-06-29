@@ -20,9 +20,9 @@ public class HomeLocalModel implements IModel {
      * 获取Banner实体信息
      * @return
      */
-    public LiveData<List<BannerEntity>> getBanner(){
+    public List<BannerEntity> getBanner(){
 
-        LiveData<List<BannerEntity>> banner = HomeDBHelper
+        List<BannerEntity> banner = HomeDBHelper
                 .getInstance()
                 .getDB()
                 .homeDao()
@@ -44,8 +44,8 @@ public class HomeLocalModel implements IModel {
      * 获取系统消息
      * @return
      */
-    public LiveData<List<SysMsgEntity>> getSystemMsgs(){
-        LiveData<List<SysMsgEntity>> systemMsgs = HomeDBHelper.getInstance()
+    public List<SysMsgEntity> getSystemMsgs(){
+        List<SysMsgEntity> systemMsgs = HomeDBHelper.getInstance()
                 .getDB().homeDao().getSysMsgAll();
         return systemMsgs;
     }
@@ -63,8 +63,8 @@ public class HomeLocalModel implements IModel {
      * 获取新用户的推荐产品
      * @return
      */
-    public LiveData<List<ProductEntity>> getNewUserProduct(){
-        LiveData<List<ProductEntity>> newUserProduct = HomeDBHelper.getInstance()
+    public List<ProductEntity> getNewUserProduct(){
+        List<ProductEntity> newUserProduct = HomeDBHelper.getInstance()
                 .getDB().homeDao().getNewUserProductAll();
         return newUserProduct;
     }
@@ -73,8 +73,8 @@ public class HomeLocalModel implements IModel {
      * 获取推荐核心产品数据
      * @return
      */
-    public LiveData<List<ProductEntity>> getProduct(){
-        LiveData<List<ProductEntity>> product = HomeDBHelper.getInstance()
+    public List<ProductEntity> getProduct(){
+        List<ProductEntity> product = HomeDBHelper.getInstance()
                 .getDB().homeDao().getProductAll();
         return product;
     }

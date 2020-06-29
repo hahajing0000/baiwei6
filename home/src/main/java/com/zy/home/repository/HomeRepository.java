@@ -1,8 +1,8 @@
 package com.zy.home.repository;
 
 import com.zy.common.app.BaseAppcation;
+import com.zy.common.async.CacheThreadPool;
 import com.zy.common.net.NetStateUtils;
-import com.zy.core.model.IModel;
 import com.zy.core.repository.Repository;
 import com.zy.home.entity.BannerEntity;
 import com.zy.home.entity.ProductEntity;
@@ -11,16 +11,13 @@ import com.zy.home.model.database.HomeDBHelper;
 import com.zy.home.model.service.HomeLocalModel;
 import com.zy.home.model.service.HomeRemoteModel;
 import com.zy.net.protocol.BaseRespEntity;
-import com.zy.net.rx.BaseObservable;
-import com.zy.net.rx.BaseObserver;
 
 import java.util.List;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
+import androidx.lifecycle.Observer;
 
 /**
  * @author:zhangyue
@@ -28,13 +25,14 @@ import io.reactivex.ObservableOnSubscribe;
  * Home模块的数据仓库
  */
 public class HomeRepository extends Repository<HomeRemoteModel> {
-
+    private final String TAG=HomeRepository.class.getSimpleName();
     /**
      * Home模块本地Model
      */
     private HomeLocalModel homeLocalModel=null;
 
-    public HomeRepository(){
+    public HomeRepository(LifecycleOwner _owner){
+        super(_owner);
         homeLocalModel = new HomeLocalModel();
     }
 
@@ -43,6 +41,7 @@ public class HomeRepository extends Repository<HomeRemoteModel> {
         return new HomeRemoteModel();
     }
 
+    LiveData<BaseRespEntity<List<BannerEntity>>> banner = null;
     /**
      * 获取Banner实体信息
      * @return
@@ -53,32 +52,34 @@ public class HomeRepository extends Repository<HomeRemoteModel> {
          * 如果可以使用远程数据
          * 如果不可用使用本地数据
          */
-        LiveData<BaseRespEntity<List<BannerEntity>>> banner = null;
+
         //网络可以情况加载网络数据
         if (NetStateUtils.isNetworkAvailable(BaseAppcation.getAppContext())){
             banner=getModel().getBanner();
-            final LiveData<BaseRespEntity<List<BannerEntity>>> finalBanner = banner;
-            Observable<Boolean> observable = Observable.create(new ObservableOnSubscribe<Boolean>() {
-                @Override
-                public void subscribe(ObservableEmitter<Boolean> emitter) throws Exception {
-                    //将网络数据结果存储到本地sqlite数据库
-                    HomeDBHelper.getInstance().getDB().homeDao().insertBannerAll(finalBanner.getValue().getData());
-                }
-            });
-            BaseObservable.doObservable(observable,new BaseObserver<Boolean>(){
-                @Override
-                public void onNext(Boolean aBoolean) {
-                    super.onNext(aBoolean);
-                }
-            });
 
+            banner.observe(owner, new Observer<BaseRespEntity<List<BannerEntity>>>() {
+                @Override
+                public void onChanged(final BaseRespEntity<List<BannerEntity>> listBaseRespEntity) {
+                    CacheThreadPool.getInstance().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            HomeDBHelper.getInstance().getDB().homeDao().insertBannerAll(listBaseRespEntity.getData());
+                        }
+                    });
+
+                }
+            });
         }else{
-            //从本地sqlite数据库提取缓存的数据
-            LiveData<List<BannerEntity>> banner1 = homeLocalModel.getBanner();
-            MutableLiveData<BaseRespEntity<List<BannerEntity>>> data= new MutableLiveData<>();
-            data.setValue(new BaseRespEntity<List<BannerEntity>>(banner1.getValue()));
+            final MutableLiveData<BaseRespEntity<List<BannerEntity>>> data = new MutableLiveData<BaseRespEntity<List<BannerEntity>>>();
+            CacheThreadPool.getInstance().execute(new Runnable() {
+                @Override
+                public void run() {
+                    //从本地sqlite数据库提取缓存的数据
+                    List<BannerEntity> banner1 = homeLocalModel.getBanner();
+                    data.postValue(new BaseRespEntity<List<BannerEntity>>(banner1));
+                }
+            });
             return data;
-
         }
 
         return banner;
@@ -97,9 +98,15 @@ public class HomeRepository extends Repository<HomeRemoteModel> {
             HomeDBHelper.getInstance().getDB().homeDao().insertSysMsgAll(systemMsgs.getValue().getData());
         }else{
             //从本地sqlite数据库提取缓存的数据
-            LiveData<List<SysMsgEntity>> liveData = homeLocalModel.getSystemMsgs();
-            MutableLiveData<BaseRespEntity<List<SysMsgEntity>>> data= new MutableLiveData<>();
-            data.setValue(new BaseRespEntity<List<SysMsgEntity>>(liveData.getValue()));
+            final MutableLiveData<BaseRespEntity<List<SysMsgEntity>>> data= new MutableLiveData<>();
+            CacheThreadPool.getInstance().execute(new Runnable() {
+                @Override
+                public void run() {
+                    List<SysMsgEntity> liveData = homeLocalModel.getSystemMsgs();
+                    data.postValue(new BaseRespEntity<List<SysMsgEntity>>(liveData));
+                }
+            });
+
             return data;
         }
 
@@ -120,9 +127,16 @@ public class HomeRepository extends Repository<HomeRemoteModel> {
             HomeDBHelper.getInstance().getDB().homeDao().insertProductAll(newUserProduct.getValue().getData());
         }else{
             //从本地sqlite数据库提取缓存的数据
-            LiveData<List<ProductEntity>> liveData = homeLocalModel.getNewUserProduct();
-            MutableLiveData<BaseRespEntity<List<ProductEntity>>> data= new MutableLiveData<>();
-            data.setValue(new BaseRespEntity<List<ProductEntity>>(liveData.getValue()));
+            final MutableLiveData<BaseRespEntity<List<ProductEntity>>> data= new MutableLiveData<>();
+            CacheThreadPool.getInstance().execute(new Runnable() {
+                @Override
+                public void run() {
+                    List<ProductEntity> liveData = homeLocalModel.getNewUserProduct();
+
+                    data.postValue(new BaseRespEntity<List<ProductEntity>>(liveData));
+                }
+            });
+
             return data;
         }
 
@@ -142,9 +156,15 @@ public class HomeRepository extends Repository<HomeRemoteModel> {
             HomeDBHelper.getInstance().getDB().homeDao().insertProductAll(product.getValue().getData());
         }else{
             //从本地sqlite数据库提取缓存的数据
-            LiveData<List<ProductEntity>> liveData = homeLocalModel.getProduct();
-            MutableLiveData<BaseRespEntity<List<ProductEntity>>> data= new MutableLiveData<>();
-            data.setValue(new BaseRespEntity<List<ProductEntity>>(liveData.getValue()));
+            final MutableLiveData<BaseRespEntity<List<ProductEntity>>> data= new MutableLiveData<>();
+            CacheThreadPool.getInstance().execute(new Runnable() {
+                @Override
+                public void run() {
+                    List<ProductEntity> liveData = homeLocalModel.getProduct();
+
+                    data.postValue(new BaseRespEntity<List<ProductEntity>>(liveData));
+                }
+            });
             return data;
         }
 

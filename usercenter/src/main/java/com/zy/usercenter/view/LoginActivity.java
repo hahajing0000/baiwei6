@@ -45,7 +45,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, UserViewMo
 
     @Override
     protected UserViewModel createVM() {
-        return new UserViewModel();
+        return new UserViewModel(this);
     }
 
     @Override

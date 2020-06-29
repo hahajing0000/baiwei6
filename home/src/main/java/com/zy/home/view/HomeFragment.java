@@ -55,7 +55,6 @@ public class HomeFragment extends BaseFragment<LayoutHomeBinding, HomeViewModel>
 
     @Override
     protected void initContentView(View view) {
-
         initView(view);
     }
 
@@ -72,7 +71,7 @@ public class HomeFragment extends BaseFragment<LayoutHomeBinding, HomeViewModel>
 
     @Override
     protected HomeViewModel createVM() {
-        return new HomeViewModel();
+        return new HomeViewModel(getActivity());
     }
 
     @Override
@@ -122,7 +121,7 @@ public class HomeFragment extends BaseFragment<LayoutHomeBinding, HomeViewModel>
      */
     private void initBannerData() {
         final LiveData<BaseRespEntity<List<BannerEntity>>> banner = vm.getBanner();
-        banner.observe(this, new Observer<BaseRespEntity<List<BannerEntity>>>() {
+        banner.observe(getActivity(), new Observer<BaseRespEntity<List<BannerEntity>>>() {
             @Override
             public void onChanged(BaseRespEntity<List<BannerEntity>> bannerEntities) {
                 if (bannerEntities==null||bannerEntities.getData()==null){
