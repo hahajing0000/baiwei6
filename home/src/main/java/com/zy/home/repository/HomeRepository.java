@@ -94,8 +94,20 @@ public class HomeRepository extends Repository<HomeRemoteModel> {
         //网络可以情况加载网络数据
         if (NetStateUtils.isNetworkAvailable(BaseAppcation.getAppContext())){
             systemMsgs=getModel().getSystemMsgs();
-            //将网络数据结果存储到本地sqlite数据库
-            HomeDBHelper.getInstance().getDB().homeDao().insertSysMsgAll(systemMsgs.getValue().getData());
+            systemMsgs.observe(owner, new Observer<BaseRespEntity<List<SysMsgEntity>>>() {
+                @Override
+                public void onChanged(final BaseRespEntity<List<SysMsgEntity>> listBaseRespEntity) {
+                    CacheThreadPool.getInstance().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            //将网络数据结果存储到本地sqlite数据库
+                            HomeDBHelper.getInstance().getDB().homeDao().insertSysMsgAll(listBaseRespEntity.getData());
+                        }
+                    });
+
+                }
+            });
+
         }else{
             //从本地sqlite数据库提取缓存的数据
             final MutableLiveData<BaseRespEntity<List<SysMsgEntity>>> data= new MutableLiveData<>();
@@ -123,8 +135,18 @@ public class HomeRepository extends Repository<HomeRemoteModel> {
         //网络可以情况加载网络数据
         if (NetStateUtils.isNetworkAvailable(BaseAppcation.getAppContext())){
             newUserProduct=getModel().getNewUserProduct();
-            //将网络数据结果存储到本地sqlite数据库
-            HomeDBHelper.getInstance().getDB().homeDao().insertProductAll(newUserProduct.getValue().getData());
+            newUserProduct.observe(owner, new Observer<BaseRespEntity<List<ProductEntity>>>() {
+                @Override
+                public void onChanged(final BaseRespEntity<List<ProductEntity>> listBaseRespEntity) {
+                   CacheThreadPool.getInstance().execute(new Runnable() {
+                       @Override
+                       public void run() {
+                           //将网络数据结果存储到本地sqlite数据库
+                           HomeDBHelper.getInstance().getDB().homeDao().insertProductAll(listBaseRespEntity.getData());
+                       }
+                   });
+                }
+            });
         }else{
             //从本地sqlite数据库提取缓存的数据
             final MutableLiveData<BaseRespEntity<List<ProductEntity>>> data= new MutableLiveData<>();
@@ -152,8 +174,18 @@ public class HomeRepository extends Repository<HomeRemoteModel> {
         //网络可以情况加载网络数据
         if (NetStateUtils.isNetworkAvailable(BaseAppcation.getAppContext())){
             product=getModel().getProduct();
-            //将网络数据结果存储到本地sqlite数据库
-            HomeDBHelper.getInstance().getDB().homeDao().insertProductAll(product.getValue().getData());
+            product.observe(owner, new Observer<BaseRespEntity<List<ProductEntity>>>() {
+                @Override
+                public void onChanged(final BaseRespEntity<List<ProductEntity>> listBaseRespEntity) {
+                   CacheThreadPool.getInstance().execute(new Runnable() {
+                       @Override
+                       public void run() {
+                           //将网络数据结果存储到本地sqlite数据库
+                           HomeDBHelper.getInstance().getDB().homeDao().insertProductAll(listBaseRespEntity.getData());
+                       }
+                   });
+                }
+            });
         }else{
             //从本地sqlite数据库提取缓存的数据
             final MutableLiveData<BaseRespEntity<List<ProductEntity>>> data= new MutableLiveData<>();

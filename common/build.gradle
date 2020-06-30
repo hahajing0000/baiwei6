@@ -44,6 +44,8 @@ dependencies {
     api libs.rxandroid
     api libs.rxjava
     api libs.glide
+
+    api libs.material
 }
 repositories {
     mavenCentral()

@@ -42,7 +42,7 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation libs.material
+
 
     implementation project(path: ':wiget')
     implementation project(path: ':core')

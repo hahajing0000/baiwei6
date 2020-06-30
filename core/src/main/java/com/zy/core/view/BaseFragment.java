@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zy.common.utils.MsgUtils;
 import com.zy.core.viewmodel.BaseViewModel;
 
 import androidx.annotation.NonNull;
@@ -45,7 +46,10 @@ public abstract class BaseFragment<Binding extends ViewDataBinding,VM extends Ba
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData(savedInstanceState);
+        initEvent();
     }
+
+    protected abstract void initEvent();
 
     /**
      * 初始化数据
@@ -69,4 +73,12 @@ public abstract class BaseFragment<Binding extends ViewDataBinding,VM extends Ba
      * 初始化绑定
      */
     protected abstract void initBinding();
+
+    /**
+     * 提示消息
+     * @param msg
+     */
+    protected void showMsg(String msg){
+        MsgUtils.INSTANCE.show(getActivity(),msg);
+    }
 }

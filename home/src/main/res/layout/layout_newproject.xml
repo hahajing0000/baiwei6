@@ -7,7 +7,9 @@
         android:layout_margin="20dp"
         android:background="@drawable/item_style_1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></RelativeLayout>
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
     <TextView
         android:layout_marginTop="-15dp"
         android:layout_marginLeft="50dp"

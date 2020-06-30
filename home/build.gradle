@@ -53,6 +53,10 @@ dependencies {
     implementation libs.room
     annotationProcessor libs.roomcompiler
 
+    implementation libs.smart
+    implementation libs.smartradar
+    implementation libs.smartball
+
     //引入第三方的Banner库
     implementation libs.banner
     implementation project(path: ':common')

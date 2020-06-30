@@ -14,7 +14,6 @@ public class BannerEntity {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-
     private String imgurl;
 
     private String desc;

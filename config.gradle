@@ -19,7 +19,8 @@ ext{
             glide: "4.9.0",
             material:"1.0.0",
             banner:"1.4.10",
-            room_version : "2.2.5"
+            room_version : "2.2.5",
+            smart : "2.0.1"
     ]
 
     dependencies=[
@@ -34,8 +35,10 @@ ext{
             material: "com.google.android.material:material:$dependenciesVersion.material",
             banner:"com.youth.banner:banner:$dependenciesVersion.banner",
             room : "androidx.room:room-runtime:$dependenciesVersion.room_version",
-            roomcompiler : "androidx.room:room-compiler:$dependenciesVersion.room_version" // For Kotlin use kapt instead of annotationProcessor
-
+            roomcompiler : "androidx.room:room-compiler:$dependenciesVersion.room_version", // For Kotlin use kapt instead of annotationProcessor
+            smart :  "com.scwang.smart:refresh-layout-kernel:$dependenciesVersion.smart",      //核心必须依赖
+            smartradar:  "com.scwang.smart:refresh-header-radar:$dependenciesVersion.smart",       //雷达刷新头
+            smartball :  "com.scwang.smart:refresh-footer-ball:$dependenciesVersion.smart"        //球脉冲加载
     ]
 
     url=[

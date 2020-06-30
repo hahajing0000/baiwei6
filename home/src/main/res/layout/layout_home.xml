@@ -6,36 +6,48 @@
             name="mine"
             type="com.zy.home.view.HomeFragment" />
     </data>
-   <ScrollView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:scrollbars="none">
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/srl_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.scwang.smart.refresh.header.BezierRadarHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.scwang.smart.refresh.header.BezierRadarHeader>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:orientation="vertical">
-           <com.youth.banner.Banner
-               android:id="@+id/banner_home_main"
-               android:layout_width="match_parent"
-               android:layout_height="@dimen/banner_height"></com.youth.banner.Banner>
-           <ViewFlipper
-               android:id="@+id/vf_main"
-               android:background="@color/lightgray"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:inAnimation="@anim/anim_in"
-               android:outAnimation="@anim/anim_out"
-               android:layout_gravity="center"></ViewFlipper>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <com.youth.banner.Banner
+                    android:id="@+id/banner_home_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/banner_height"></com.youth.banner.Banner>
+                <ViewFlipper
+                    android:id="@+id/vf_main"
+                    android:background="@color/lightgray"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inAnimation="@anim/anim_in"
+                    android:outAnimation="@anim/anim_out"
+                    android:layout_gravity="center"></ViewFlipper>
 
-           <include layout="@layout/layout_newproject" android:layout_width="match_parent" android:layout_height="@dimen/newproject_height"></include>
-           <ImageView
-               app:imgSrc="@{mine.imgPath}"
-               android:scaleType="fitXY"
-               android:id="@+id/iv_adv"
-               android:layout_width="match_parent"
-               android:layout_height="60dp"></ImageView>
-           <include layout="@layout/layout_project" android:layout_width="match_parent" android:layout_height="wrap_content"></include>
-       </LinearLayout>
-   </ScrollView>
+                <include layout="@layout/layout_newproject" android:layout_width="match_parent" android:layout_height="@dimen/newproject_height"></include>
+                <ImageView
+                    app:imgSrc="@{mine.imgPath}"
+                    android:scaleType="fitXY"
+                    android:id="@+id/iv_adv"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"></ImageView>
+                <include layout="@layout/layout_project" android:layout_width="match_parent" android:layout_height="wrap_content"></include>
+            </LinearLayout>
+        </ScrollView>
+        <com.scwang.smart.refresh.footer.BallPulseFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.scwang.smart.refresh.footer.BallPulseFooter>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
 </layout>
