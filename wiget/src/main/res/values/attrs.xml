@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--标题栏-->
     <declare-styleable name="TitleBar">
         <attr name="left_txt" format="string"></attr>
         <attr name="left_icon" format="reference"></attr>
@@ -13,5 +14,14 @@
         <attr name="right_icon_visible" format="boolean"></attr>
 
         <attr name="icon_wh" format="integer"></attr>
+    </declare-styleable>
+
+    <!--进度条-->
+    <declare-styleable name="FinalceProcessBar">
+        <attr name="textColor" format="color"></attr>
+        <attr name="textSize" format="dimension"></attr>
+
+        <attr name="stork_width" format="dimension"></attr>
+        <attr name="stork_color" format="color"></attr>
     </declare-styleable>
 </resources>

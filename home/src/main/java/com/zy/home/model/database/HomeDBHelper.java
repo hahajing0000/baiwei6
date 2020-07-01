@@ -1,6 +1,7 @@
 package com.zy.home.model.database;
 
 import com.zy.common.app.BaseAppcation;
+import com.zy.storage.room.BaseDBHelper;
 
 import androidx.room.Room;
 
@@ -8,7 +9,7 @@ import androidx.room.Room;
  * @author:zhangyue
  * @date:2020/6/29
  */
-public class HomeDBHelper {
+public class HomeDBHelper{
     /**
      * 数据库的名称
      */
@@ -40,4 +41,5 @@ public class HomeDBHelper {
             db.close();
         }
     }
+
 }

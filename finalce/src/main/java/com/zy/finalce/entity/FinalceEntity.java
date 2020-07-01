@@ -1,22 +1,39 @@
 package com.zy.finalce.entity;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 /**
  * @author:zhangyue
  * @date:2020/6/30
  * 金融理财产品实体类
  */
+@Entity(tableName = "tb_finalce")
 public class FinalceEntity {
+    @PrimaryKey(autoGenerate = false)
     private int id;
+    @ColumnInfo
     private String productname;
+    @ColumnInfo
     private String productdesc;
+    @ColumnInfo
     private int producttype;
+    @ColumnInfo
     private double yearrate;
+    @ColumnInfo
     private double totalamount;
+    @ColumnInfo
     private int saleamount;
+    @ColumnInfo
     private String labels;
+    @ColumnInfo
     private int lockdays;
+    @ColumnInfo
     private int minbugamount;
+    @ColumnInfo
     private int isnew;
+    @ColumnInfo
     private int startlevel;
 
     public FinalceEntity(){}
