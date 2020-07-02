@@ -43,25 +43,24 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
-
     implementation project(path: ':wiget')
     implementation project(path: ':core')
     implementation project(path: ':net')
-    if (!IS_USERCENTER_APP.toBoolean()){
+    if (!IS_USERCENTER_APP.toBoolean()) {
         implementation project(path: ':usercenter')
     }
-    if (!IS_FINALCE_APP.toBoolean()){
+    if (!IS_FINALCE_APP.toBoolean()) {
         implementation project(path: ':finalce')
     }
 
-    if (!IS_HOME_APP.toBoolean()){
+    if (!IS_HOME_APP.toBoolean()) {
         implementation project(path: ':home')
     }
-    if (!IS_MORE_APP.toBoolean()){
+    if (!IS_MORE_APP.toBoolean()) {
         implementation project(path: ':more')
     }
 
-    if (!IS_ACCOUNT_APP.toBoolean()){
+    if (!IS_ACCOUNT_APP.toBoolean()) {
         implementation project(path: ':account')
     }
 

@@ -3,4 +3,10 @@
     <style name="tab_item_title_styles" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="RatingBarStyle" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bar_drawable</item>
+        <item name="android:minWidth">30dp</item>
+        <item name="android:minHeight">30dp</item>
+    </style>
 </resources>

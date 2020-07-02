@@ -1,22 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="finalce"
             type="com.zy.finalce.entity.FinalceEntity" />
     </data>
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{finalce.productname}"></TextView>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="left|center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content"
+                android:text="@{finalce.productname}"></TextView>
+
+            <LinearLayout
+                android:gravity="right"
+                android:layout_width="0dp"
+                android:layout_weight="6"
+                android:layout_height="wrap_content">
+                <RatingBar
+                    android:id="@+id/rb_bar"
+                    style="@style/RatingBarStyle"
+                    android:layout_gravity="right"
+                    android:numStars="@integer/startnums"
+                    android:stepSize="1"
+                    android:rating="@{finalce.startlevel}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></RatingBar>
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center"
+                android:textSize="40sp"
+                android:textColor="@color/darkorange"
+                android:text="@{String.valueOf(finalce.yearrate*100)+'%'}"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:text="理财期限"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(finalce.lockdays)}"></TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:text="剩余:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                </TextView>
+                <com.zy.wiget.FinalceProcessBar
+                    android:padding="10dp"
+                    app:textColor="@color/darkorange"
+                    app:textSize="20sp"
+                    app:stork_width="4dp"
+                    app:stork_color="@color/darkorange"
+                    app:sweepangle="@{String.valueOf(finalce.totalamount)}"
+                    app:txtcontent="@{String.valueOf(finalce.saleamount)}"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"></com.zy.wiget.FinalceProcessBar>
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
 

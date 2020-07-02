@@ -2,6 +2,9 @@ package com.zy.finalce.view;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -19,10 +22,14 @@ import com.zy.finalce.databinding.LayoutFinalceBinding;
 import com.zy.finalce.entity.FinalceEntity;
 import com.zy.finalce.viewmodel.FinalceViewModel;
 import com.zy.net.protocol.BaseRespEntity;
+import com.zy.wiget.FinalceProcessBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.BindingMethod;
+import androidx.databinding.BindingMethods;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +39,11 @@ import androidx.recyclerview.widget.RecyclerView;
  * @author:zhangyue
  * @date:2020/6/27
  */
+//@BindingMethods({
+//        @BindingMethod(type = android.widget.RatingBar.class,
+//                attribute = "android:layout_height",
+//                method = "setRatingBarHeight"),
+//})
 public class FinalceFragment extends BaseFragment<LayoutFinalceBinding, FinalceViewModel> {
     private final String TAG = FinalceFragment.class.getSimpleName();
 
@@ -81,7 +93,7 @@ public class FinalceFragment extends BaseFragment<LayoutFinalceBinding, FinalceV
                     currentType = 2;
                     currentPage=0;
                 }
-                loadFinalceData();
+                loadFinalceData(false);
             }
 
             @Override
@@ -99,14 +111,16 @@ public class FinalceFragment extends BaseFragment<LayoutFinalceBinding, FinalceV
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
-
+                currentPage=0;
+                loadFinalceData(false);
             }
         });
         srlFinalceMain.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
                 refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
-
+                ++currentPage;
+                loadFinalceData(true);
             }
         });
     }
@@ -119,22 +133,28 @@ public class FinalceFragment extends BaseFragment<LayoutFinalceBinding, FinalceV
         adapter = new FinalceListAdapter(getActivity());
         rvFinalceMain.setAdapter(adapter);
 
-        loadFinalceData();
+        loadFinalceData(false);
     }
 
     /**
      * 从VM获取数据
      */
-    private void loadFinalceData() {
+    private void loadFinalceData(final boolean isAppend) {
         LiveData<BaseRespEntity<List<FinalceEntity>>> result = vm.getFinalceByType(currentType, currentPage, pagesize);
         result.observe(getActivity(), new Observer<BaseRespEntity<List<FinalceEntity>>>() {
             @Override
             public void onChanged(BaseRespEntity<List<FinalceEntity>> listBaseRespEntity) {
                 if (listBaseRespEntity == null || listBaseRespEntity.getData() == null) {
                     LogUtils.INSTANCE.w(TAG, "server return value maybe is null...");
+//                    currentPage=0;
                     return;
                 }
-                adapter.loadDataSource(listBaseRespEntity.getData());
+                if (!isAppend){
+                    adapter.loadDataSource(listBaseRespEntity.getData());
+                }
+                else{
+                    adapter.appendDataSource(listBaseRespEntity.getData());
+                }
             }
         });
     }
@@ -153,4 +173,33 @@ public class FinalceFragment extends BaseFragment<LayoutFinalceBinding, FinalceV
     protected void initBinding() {
 
     }
+
+    @BindingAdapter({"sweepangle","txtcontent"})
+    public static void setContent(FinalceProcessBar bar,String totalmount,String selamount){
+        //总金额
+        float total=Float.parseFloat(totalmount);
+        //已销售金额
+        float sela=Float.parseFloat(selamount);
+        //剩余百分比
+        float result=(total-sela)/total;
+        bar.setTxtContent(result*100+"%");
+        bar.setSweepAngle(360*result);
+
+        bar.startAnimator(10000);
+        bar.startContentAnimator(10000,result*100);
+
+        bar.setClickListener(new FinalceProcessBar.FinalceParoessBarClickListener() {
+            @Override
+            public void onClick(View view) {
+                LogUtils.INSTANCE.i("","FinalceProcessBar click....");
+            }
+        });
+    }
+
+//    @BindingAdapter({"android:layout_height"})
+//    public static void setRatingBarHeight(RatingBar bar,int oldValue,int newValue){
+//        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 60);
+//        bar.setLayoutParams(layoutParams);
+//    }
+
 }

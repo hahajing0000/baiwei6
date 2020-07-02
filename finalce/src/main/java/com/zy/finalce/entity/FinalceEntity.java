@@ -2,6 +2,7 @@ package com.zy.finalce.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -35,13 +36,28 @@ public class FinalceEntity {
     private int isnew;
     @ColumnInfo
     private int startlevel;
+    @Ignore
+    private float yy;
+
+    /**
+     * 获取余额百分比
+     * @return
+     */
+    public float getYy() {
+        getTotalamount();
+        getSaleamount();
+
+        return yy;
+    }
 
     public FinalceEntity(){}
 
+    @Ignore
     public FinalceEntity(String productname) {
         this.productname = productname;
     }
 
+    @Ignore
     public FinalceEntity(int id, String productname, String productdesc, int producttype, double yearrate, double totalamount, int saleamount, String labels, int lockdays, int minbugamount, int isnew, int startlevel) {
         this.id = id;
         this.productname = productname;
