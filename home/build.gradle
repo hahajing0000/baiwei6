@@ -18,6 +18,13 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+        //arouter集成
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     buildTypes {
@@ -57,6 +64,8 @@ dependencies {
     implementation libs.smartradar
     implementation libs.smartball
 
+    annotationProcessor libs.aroutercompiler
+
     //引入第三方的Banner库
     implementation libs.banner
     implementation project(path: ':common')
@@ -64,4 +73,5 @@ dependencies {
     implementation project(path: ':core')
     implementation project(path: ':wiget')
     implementation project(path: ':net')
+    implementation project(path: ':router')
 }

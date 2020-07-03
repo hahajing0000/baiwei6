@@ -7,13 +7,24 @@
     tools:context=".TestActivity"
     android:orientation="vertical"
     android:gravity="center">
-    <com.zy.wiget.FinalceProcessBar
-        android:padding="5dp"
-        app:stork_width="8dp"
-        app:stork_color="@color/colorPrimary"
-        app:textSize="25sp"
-        app:textColor="@color/darkorange"
-        android:id="@+id/fpb_test"
-        android:layout_width="300dp"
-        android:layout_height="300dp"></com.zy.wiget.FinalceProcessBar>
+    <com.zy.wiget.BubbleContainer
+        android:layout_width="100dp"
+        android:layout_height="30dp">
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello Bubble"></TextView>
+    </com.zy.wiget.BubbleContainer>
+
+    <com.zy.wiget.BubbleContainer
+        android:layout_width="100dp"
+        android:layout_height="30dp">
+        <Button
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello Bubble"></Button>
+
+    </com.zy.wiget.BubbleContainer>
 </LinearLayout>

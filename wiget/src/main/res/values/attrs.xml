@@ -27,4 +27,15 @@
         <attr name="sweepangle" format="float"></attr>
         <attr name="txtcontent" format="string"></attr>
     </declare-styleable>
+
+    <!--气泡-->
+    <declare-styleable name="BubbleView">
+        <attr name="backgroundColor" format="color"></attr>
+        <attr name="storkWidth" format="dimension"></attr>
+        <attr name="storkColor" format="color"></attr>
+        <attr name="contentColor" format="color"></attr>
+        <attr name="contentSize" format="dimension"></attr>
+        <attr name="bubbleContent" format="string"></attr>
+        <attr name="bubbleRadius" format="float"></attr>
+    </declare-styleable>
 </resources>

@@ -41,7 +41,8 @@
                     android:scaleType="fitXY"
                     android:id="@+id/iv_adv"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"></ImageView>
+                    android:layout_height="60dp"
+                    android:onClick="@{mine::imgOnClick}"></ImageView>
                 <include layout="@layout/layout_project" android:layout_width="match_parent" android:layout_height="wrap_content"></include>
             </LinearLayout>
         </ScrollView>

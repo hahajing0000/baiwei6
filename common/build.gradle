@@ -36,6 +36,9 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    //Arouter 库
+    api libs.arouter
+
     api libs.retrofit
     api libs.retrofitgson
     api libs.retrofitrxjava

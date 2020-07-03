@@ -15,6 +15,13 @@ android {
         versionName appInfo.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //arouter集成
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     buildTypes {
@@ -42,10 +49,12 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    annotationProcessor libs.aroutercompiler
 
     implementation project(path: ':wiget')
     implementation project(path: ':core')
     implementation project(path: ':net')
+    implementation project(path: ':router')
     if (!IS_USERCENTER_APP.toBoolean()) {
         implementation project(path: ':usercenter')
     }

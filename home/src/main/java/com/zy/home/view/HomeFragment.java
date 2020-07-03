@@ -32,9 +32,13 @@ import com.zy.home.entity.BannerEntity;
 import com.zy.home.entity.SysMsgEntity;
 import com.zy.home.viewmodel.HomeViewModel;
 import com.zy.net.protocol.BaseRespEntity;
+import com.zy.router.RouterManager;
+import com.zy.router.RouterPath;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -218,6 +222,12 @@ public class HomeFragment extends BaseFragment<LayoutHomeBinding, HomeViewModel>
     @BindingAdapter({"imgSrc"})
     public static void bindImgPath(ImageView view,String path){
         Glide.with(BaseAppcation.getAppContext()).load(path).into(view);
+    }
+
+    public void imgOnClick(View view){
+        Map<String,Object> params=new HashMap<>();
+        params.put("procductid",10);
+        RouterManager.getInstance().route(RouterPath.Finalce_BUY,params);
     }
 
 
