@@ -3,6 +3,7 @@ package com.zy.core.view;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.zy.common.app.BaseAppcation;
 import com.zy.common.utils.MsgUtils;
 import com.zy.core.R;

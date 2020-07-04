@@ -8,6 +8,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
 def appInfo = rootProject.ext.android
+def libs = rootProject.ext.dependencies
 
 android {
     compileSdkVersion appInfo.compileSdkVersion
@@ -21,6 +22,13 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+        //arouter集成
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     buildTypes {
@@ -53,6 +61,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    annotationProcessor libs.aroutercompiler
+
     implementation project(path: ':common')
     implementation project(path: ':core')
     implementation "androidx.core:core-ktx:+"
@@ -60,6 +71,7 @@ dependencies {
     implementation project(path: ':net')
     implementation project(path: ':storage')
     implementation project(path: ':wiget')
+    implementation project(path: ':router')
 }
 repositories {
     mavenCentral()

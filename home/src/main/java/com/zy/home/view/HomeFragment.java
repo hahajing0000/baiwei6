@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.alibaba.android.arouter.facade.Postcard;
+import com.alibaba.android.arouter.facade.callback.NavigationCallback;
 import com.bumptech.glide.Glide;
 import com.scwang.smart.refresh.footer.BallPulseFooter;
 import com.scwang.smart.refresh.header.BezierRadarHeader;
@@ -227,7 +229,31 @@ public class HomeFragment extends BaseFragment<LayoutHomeBinding, HomeViewModel>
     public void imgOnClick(View view){
         Map<String,Object> params=new HashMap<>();
         params.put("procductid",10);
-        RouterManager.getInstance().route(RouterPath.Finalce_BUY,params);
+        RouterManager.getInstance().route(getActivity(), RouterPath.Finalce_BUY, params, new NavigationCallback() {
+            @Override
+            public void onFound(Postcard postcard) {
+                LogUtils.INSTANCE.i(TAG,"已找到页面");
+            }
+
+            @Override
+            public void onLost(Postcard postcard) {
+                LogUtils.INSTANCE.i(TAG,"走丢了");
+            }
+
+            @Override
+            public void onArrival(Postcard postcard) {
+                LogUtils.INSTANCE.i(TAG,"已跳转成功");
+            }
+
+            @Override
+            public void onInterrupt(Postcard postcard) {
+                LogUtils.INSTANCE.e(TAG,"被拦截");
+                if (postcard.getPath().equals(RouterPath.Finalce_BUY)){
+                    RouterManager.getInstance().routeGreenChannel(RouterPath.USERCENTER_LOGIN);
+                }
+
+            }
+        });
     }
 
 

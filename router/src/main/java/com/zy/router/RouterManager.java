@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 
 import com.alibaba.android.arouter.facade.Postcard;
+import com.alibaba.android.arouter.facade.callback.NavigationCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.io.Serializable;
@@ -45,6 +46,27 @@ public class RouterManager {
     }
 
     /**
+     * 路由方法具有路由回调的方法
+     * @param context
+     * @param path
+     * @param callback
+     */
+    public void route(Context context, String path, NavigationCallback callback){
+        ARouter.getInstance().build(path).navigation(context,callback);
+    }
+
+    /**
+     * 路由方法携带参数并具有回调的方法
+     * @param context
+     * @param path
+     * @param params
+     * @param callback
+     */
+    public void route(Context context,String path,Map<String,Object> params,NavigationCallback callback){
+        createPostcard(path,params).navigation(context,callback);
+    }
+
+    /**
      * 路由跳转方法
      * @param path
      */
@@ -53,11 +75,29 @@ public class RouterManager {
     }
 
     /**
+     * 绿色通道的跳转
+     * @param path
+     */
+    public void routeGreenChannel(String path){
+        ARouter.getInstance().build(path).greenChannel().navigation();
+    }
+
+    /**
      * 路由跳转方法  （可携带参数）
      * @param path
      * @param params
      */
     public void route(String path, Map<String,Object> params){
+        createPostcard(path,params).navigation();
+    }
+
+    /**
+     * 创建Postcard方法
+     * @param path
+     * @param params
+     * @return
+     */
+    private Postcard createPostcard(String path, Map<String,Object> params) {
         Postcard build = ARouter.getInstance().build(path);
         if (params!=null&&params.size()>0){
             Set<Map.Entry<String, Object>> entries = params.entrySet();
@@ -80,7 +120,7 @@ public class RouterManager {
                 }
             }
         }
-        build.navigation();
+        return build;
     }
 
     /**
