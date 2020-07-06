@@ -7,24 +7,13 @@
     tools:context=".TestActivity"
     android:orientation="vertical"
     android:gravity="center">
-    <com.zy.wiget.BubbleContainer
-        android:layout_width="100dp"
-        android:layout_height="30dp">
-        <TextView
-            android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello Bubble"></TextView>
-    </com.zy.wiget.BubbleContainer>
-
-    <com.zy.wiget.BubbleContainer
-        android:layout_width="100dp"
-        android:layout_height="30dp">
-        <Button
-            android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello Bubble"></Button>
-
-    </com.zy.wiget.BubbleContainer>
+<!--    <com.zy.wiget.CustomProcessBar-->
+<!--        android:id="@+id/cpb_test"-->
+<!--        app:currentProcess="60"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"></com.zy.wiget.CustomProcessBar>-->
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
