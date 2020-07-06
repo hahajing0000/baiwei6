@@ -23,6 +23,7 @@ ext{
             smart : "2.0.1",
             arouter: "1.5.0",
             aroutercompiler:"1.2.2",
+            chart:"v3.1.0"
     ]
 
     dependencies=[
@@ -43,6 +44,7 @@ ext{
             smartball :  "com.scwang.smart:refresh-footer-ball:$dependenciesVersion.smart"  ,      //球脉冲加载
             arouter: "com.alibaba:arouter-api:$dependenciesVersion.arouter",
             aroutercompiler:"com.alibaba:arouter-compiler:$dependenciesVersion.aroutercompiler",
+            chart:"com.github.PhilJay:MPAndroidChart:$dependenciesVersion.chart"
     ]
 
     url=[

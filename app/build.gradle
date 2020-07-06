@@ -22,6 +22,8 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
+
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -49,7 +51,12 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    //引用图表控件
+    implementation libs.chart
+
     annotationProcessor libs.aroutercompiler
+
+    implementation "com.android.support:multidex:1.0.3"
 
     implementation project(path: ':wiget')
     implementation project(path: ':core')
