@@ -48,4 +48,10 @@
         <!--当前进度-->
         <attr name="currentProcess" format="float"></attr>
     </declare-styleable>
+
+    <!--自定义ET的属性-->
+    <declare-styleable name="CustomEditText">
+        <attr name="cet_maxlength" format="integer"></attr>
+        <attr name="cet_txtsize" format="dimension"></attr>
+    </declare-styleable>
 </resources>
